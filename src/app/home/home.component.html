@@ -1,0 +1,59 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <h4 class="title flex-center">
+      <mat-icon svgIcon="github-pull-request" class="title-icon"></mat-icon
+      >Review Rumble
+    </h4>
+    <span class="example-spacer"></span>
+    <div class="user-info flex-center">
+      <div [matTooltip]="getMilestoneTooltip()" class="flex-center">
+        <span>{{ this.user.username }}</span>
+        @defer{
+        <img height="32" width="32" [src]="getGithubAvatarUrl()" />
+        } @loading {
+        <mat-spinner [diameter]="32"></mat-spinner>
+        }
+      </div>
+      <mat-icon class="settings-icon-button" (click)="openSettingsDialog()">
+        settings
+      </mat-icon>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <button
+      mat-button
+      [routerLink]="['assigned-pull-requests']"
+      routerLinkActive="active-nav-button"
+    >
+      <mat-icon>assignment_add</mat-icon>Assigned Pull Requests (4)
+    </button>
+    <button
+      mat-button
+      [routerLink]="['my-pull-requests']"
+      routerLinkActive="active-nav-button"
+      style="margin: 0px 8px"
+    >
+      <mat-icon>assignment_ind</mat-icon>My Pull Requests
+    </button>
+    <button
+      mat-button
+      [routerLink]="['all-pull-requests']"
+      routerLinkActive="active-nav-button"
+    >
+      <mat-icon>assignment</mat-icon>All Pull Requests
+    </button>
+    <span class="example-spacer"></span>
+    <button
+      mat-button
+      [routerLink]="['leaderboard']"
+      routerLinkActive="active-nav-button"
+    >
+      <mat-icon>trophy</mat-icon>Leaderboard
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<router-outlet></router-outlet>
+<button mat-fab (click)="openDialog()" extended class="add-pull-request-button">
+  <mat-icon>add</mat-icon>
+  Add Pull Request
+</button>

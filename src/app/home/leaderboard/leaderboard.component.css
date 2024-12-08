@@ -1,0 +1,11 @@
+table {
+    width: 100%;
+  }
+  
+  td.mat-mdc-cell{
+    border-bottom-style: none;
+  }
+
+  .mat-mdc-header-cell, .mat-mdc-cell {
+    text-align: center;
+  }

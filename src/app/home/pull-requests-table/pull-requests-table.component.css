@@ -1,0 +1,32 @@
+.status-open {
+    color: #36abf4;
+  }
+  
+  .status-inreview {
+    color: #ff9800;
+  }
+  
+  .status-requestchanges {
+    color: #ff5722;
+  }
+  
+  .status-approved {
+    color: #4caf50;
+  }
+  
+  .mat-column-title {
+    max-width: 470px;
+  }
+  
+  .mat-column-status {
+    width: 220px;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  td.mat-mdc-cell{
+    border-bottom-style: none;
+    padding: 12px 12px;
+  }

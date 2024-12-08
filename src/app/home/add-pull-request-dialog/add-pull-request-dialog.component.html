@@ -1,0 +1,13 @@
+<h2 mat-dialog-title style="font-weight: bold; margin-bottom: 10px;">Add Pull Request</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Enter URL</mat-label>
+    <input style="font-size: 14px;" matInput [(ngModel)]="url" placeholder="https://github.com/watchguard-it/repo/pull/1" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button cdkFocusInitial (click)="onSubmit()">Add</button>
+</mat-dialog-actions>

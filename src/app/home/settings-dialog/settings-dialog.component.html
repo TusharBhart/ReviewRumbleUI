@@ -1,0 +1,64 @@
+<h2 mat-dialog-title style="font-weight: bold;">Settings</h2>
+<mat-dialog-content>
+    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+        <span style="font-weight: bold; margin-bottom: 10px;">User Status:</span>
+        <mat-button-toggle-group name="userStatus" [(ngModel)]="userStatus">
+          <mat-button-toggle style="width:100%" value="active">Active</mat-button-toggle>
+          <mat-button-toggle style="width:100%" value="inactive">InActive</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+        <span style="font-weight: bold; margin-bottom: 10px;">Default Theme:</span>
+        <mat-button-toggle-group name="themeMode" [(ngModel)]="selectedTheme" (change)="onThemeChange($event.value)">
+          <mat-button-toggle style="width:100%" value="dark">Dark</mat-button-toggle>
+          <mat-button-toggle style="width:100%" value="light">Light</mat-button-toggle>
+          <mat-button-toggle style="width:100%" value="system">System</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div style="display: flex; flex-direction: column; margin-top: 10px;">
+        <span style="font-weight: bold; margin-bottom: 10px;">Theme Color:</span>
+                <mat-chip-listbox name="themeColor" [(ngModel)]="selectedThemeColor" (change)="onThemeColorChange($event.value)">
+          <mat-chip-option value="red">
+            <span class="color-sample" style="background-color: #f44336;"></span> Red
+          </mat-chip-option>
+          <mat-chip-option value="green">
+            <span class="color-sample" style="background-color: #4caf50;"></span> Green
+          </mat-chip-option>
+          <mat-chip-option value="blue">
+            <span class="color-sample" style="background-color: #2196f3;"></span> Blue
+          </mat-chip-option>
+          <mat-chip-option value="yellow">
+            <span class="color-sample" style="background-color: #ffeb3b;"></span> Yellow
+          </mat-chip-option>
+          <mat-chip-option value="cyan">
+            <span class="color-sample" style="background-color: #00bcd4;"></span> Cyan
+          </mat-chip-option>
+          <mat-chip-option value="magenta">
+            <span class="color-sample" style="background-color: #e91e63;"></span> Magenta
+          </mat-chip-option>
+          <mat-chip-option value="orange">
+            <span class="color-sample" style="background-color: #ff9800;"></span> Orange
+          </mat-chip-option>
+          <mat-chip-option value="chartreuse">
+            <span class="color-sample" style="background-color: #7fff00;"></span> Chartreuse
+          </mat-chip-option>
+          <mat-chip-option value="spring-green">
+            <span class="color-sample" style="background-color: #00ff7f;"></span> Spring Green
+          </mat-chip-option>
+          <mat-chip-option value="azure">
+            <span class="color-sample" style="background-color: #007fff;"></span> Azure
+          </mat-chip-option>
+          <mat-chip-option value="violet">
+            <span class="color-sample" style="background-color: #8a2be2;"></span> Violet
+          </mat-chip-option>
+          <mat-chip-option value="rose">
+            <span class="color-sample" style="background-color: #ff007f;"></span> Rose
+          </mat-chip-option>
+        </mat-chip-listbox>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button cdkFocusInitial mat-dialog-close>Save</button>
+</mat-dialog-actions>
