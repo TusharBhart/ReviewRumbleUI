@@ -63,7 +63,7 @@ export class HomeComponent {
   getMilestoneTooltip(): string {
     let title = '';
     let emoji = '';
-    let totalReviewPRs = this.user.totalReviewsCount;
+    let totalReviewPRs = this.user.totalReviewCount;
 
     if (totalReviewPRs < 10) {
       title = 'Novice Reviewer';

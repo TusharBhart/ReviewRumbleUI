@@ -1,16 +1,22 @@
 export interface PullRequest {
+  id: number;
   title: string;
-  author: string;
+  author: Reviewer;
   url: string;
   repository: string;
   status: ReviewStatus;
   addedDate: Date;
-  reviewers: Array<string>;
+  reviewers: Array<Reviewer>;
+}
+
+export interface Reviewer {
+  id: number,
+  username: string
 }
 
 export enum ReviewStatus {
   Open = 'Open',
-  InReview = 'In Review',
-  RequestChanges = 'Request Changes',
+  InReview = 'InReview',
+  RequestChanges = 'RequestChanges',
   Approved = 'Approved',
 }

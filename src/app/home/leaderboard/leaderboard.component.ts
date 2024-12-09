@@ -1,4 +1,3 @@
-import { NgClass, DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -32,6 +31,8 @@ import { SpinnerService } from '../../shared/spinner.service';
   styleUrl: './leaderboard.component.css',
 })
 export class LeaderboardComponent implements OnInit {
+  displayedColumns : string[] = ['ranking', 'name', 'reviews'];
+
   readonly reviewRumbleApi = inject(ReviewRumbleApiService);
   readonly spinner = inject(SpinnerService);
   reviewers: Array<User> = [];

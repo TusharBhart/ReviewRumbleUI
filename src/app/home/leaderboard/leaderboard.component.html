@@ -23,6 +23,6 @@
     </ng-container>
 
     <!-- Table Header and Row Definition -->
-    <tr mat-header-row *matHeaderRowDef="['ranking', 'name', 'reviews']" style="font-weight: 600;"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['ranking', 'name', 'reviews']"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" style="font-weight: 600;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>

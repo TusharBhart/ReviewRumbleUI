@@ -1,15 +1,19 @@
 import { NgClass, DatePipe } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSortModule, MatSort } from '@angular/material/sort';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { PullRequest, ReviewStatus } from '../../../core/review-rumble-api/models/pull-request.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReviewRumbleApiService } from '../../../core/review-rumble-api/review-rumble-api.service';
+import { SpinnerService } from '../../../shared/spinner.service';
 
 @Component({
   selector: 'app-pull-requests-table',
@@ -19,84 +23,45 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 })
 export class PullRequestsTableComponent {
   displayedColumns: string[] = ['title', 'author', 'repository', 'status', 'addedDate', 'reviewers'];
-  statusOptions: string[] = ['Open', 'In Review', 'Request Changes', 'Approved'];
+  statusOptions: string[] = ['Open', 'InReview', 'RequestChanges', 'Approved'];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  pullRequests: PullRequest[] = [
-    {
-      title: 'https://github.com/watchguard-it/JenkinsPipelineSharedLibraries/pull/103',
-      author: 'gauravpreet-wg',
-      url: 'https://github.com/EmsAdminUI/repo/pull/1',
-      repository: 'EmsAdminUI',
-      status: ReviewStatusEnum.Approved,
-      addedDate: new Date('2024-12-04'),
-      reviewers: ['tusharbhart-wg', 'afeefashraf-wg']
-    },
-    {
-      title: '[ITDIGIT-XXXXX] Added Feature',
-      author: 'sakshammital',
-      url: 'https://github.com/example/repo/pull/2',
-      repository: 'BusinessRuleApi',
-      status: ReviewStatusEnum.InReview,
-      addedDate: new Date('2024-12-04'),
-      reviewers: ['snehagoyal-wg', 'tusharbhart-wg']
-    },
-    {
-      title: '[ITDIGIT-XXXXX] Refactor Code',
-      author: 'afeefashraf-wg',
-      url: 'https://github.com/example/repo/pull/3',
-      repository: 'EmsAdminApi',
-      status: ReviewStatusEnum.RequestChanges,
-      addedDate: new Date('2024-12-04'),
-      reviewers: ['gauravpreet-wg', 'sakshammital']
-    },
-    {
-      title: '[ITDIGIT-XXXXX] Update Dependencies',
-      author: 'tusharbhart-wg',
-      url: 'https://github.com/example/repo/pull/4',
-      repository: 'DeviceDetailsApi',
-      status: ReviewStatusEnum.Open,
-      addedDate: new Date('2024-12-04'),
-      reviewers: ['snehagoyal-wg', 'afeefashraf-wg']
-    }
-  ];
-
-  dataSource = new MatTableDataSource<PullRequest>(this.pullRequests);
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
+  @Input() pullRequests: PullRequest[] = [];
+  @Input() showActions: boolean = false;
+ 
+  readonly reviewRumbleApi = inject(ReviewRumbleApiService);
+  readonly spinner = inject(SpinnerService);
+  readonly snackBar = inject(MatSnackBar);
 
   getStatusColor(status: string): string {
-    switch (status as ReviewStatusEnum) {
-      case ReviewStatusEnum.Open:
+    switch (status as ReviewStatus) {
+      case ReviewStatus.Open:
         return 'status-open';
-      case ReviewStatusEnum.InReview:
+      case ReviewStatus.InReview:
         return 'status-inreview';
-      case ReviewStatusEnum.RequestChanges:
+      case ReviewStatus.RequestChanges:
         return 'status-requestchanges';
-      case ReviewStatusEnum.Approved:
+      case ReviewStatus.Approved:
         return 'status-approved';
     }
   }
-}
 
-export interface PullRequest {
-  title: string;
-  author: string;
-  url: string;
-  repository: string;
-  status: ReviewStatusEnum;
-  addedDate: Date;
-  reviewers: Array<string>;
-}
+  updateStatus(pullRequest: PullRequest, status: ReviewStatus): void {
+    this.spinner.show();
+    this.reviewRumbleApi.updatePullRequestStatus(pullRequest.id, status).subscribe({
+      next: () => {
+        this.spinner.hide();
+        this.snackBar.open(`Pull request status updated to ${status}`, 'Close', {
+          duration: 5000,
+        });
+      },
+      error: (error) => {
+        console.error(error);
+        this.spinner.hide();
 
-export enum ReviewStatusEnum {
-  Open = 'Open',
-  InReview = 'In Review',
-  RequestChanges = 'Request Changes',
-  Approved = 'Approved'
+        this.snackBar.open('Some Error Occured. Please try again later!', 'Close', {
+          duration: 5000,
+        });
+      },
+    });
+  }
 }
