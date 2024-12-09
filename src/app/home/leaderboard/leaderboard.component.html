@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="leaders">
+<table mat-table [dataSource]="reviewers">
     <!-- Ranking Column -->
     <ng-container matColumnDef="ranking">
     <th mat-header-cell *matHeaderCellDef>Ranking</th>
@@ -8,10 +8,10 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let leader; let i = index">
-        <a [href]="'https://github.com/' + leader.username" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; justify-content: center;">
-            <img height="24px" width="24px" src="https://avatars.githubusercontent.com/u/161314404?v=4&size=64" style="margin-right: 8px; border-radius: 50%;" />
-            {{ leader.username }} @if(i < 3) { <span>{{ getIcon(i) }}</span> }
+    <td mat-cell *matCellDef="let reviewer; let i = index">
+        <a [href]="'https://github.com/' + reviewer.username" target="_blank" style="text-decoration: none; color: inherit; display: flex; align-items: center; justify-content: center;">
+            <img height="24px" width="24px" [src]="'https://avatars.githubusercontent.com/u/'+ reviewer.id +'?v=4&size=64'" style="margin-right: 8px; border-radius: 50%;" />
+            {{ reviewer.username }} @if(i < 3) { <span>{{ getIcon(i) }}</span> }
           </a>
     </td>
     </ng-container>
@@ -19,7 +19,7 @@
     <!-- Reviews Column -->
     <ng-container matColumnDef="reviews">
     <th mat-header-cell *matHeaderCellDef>Reviews</th>
-    <td mat-cell *matCellDef="let leader">{{ leader.reviews }}</td>
+    <td mat-cell *matCellDef="let reviewer">{{ reviewer.totalReviewCount }}</td>
     </ng-container>
 
     <!-- Table Header and Row Definition -->

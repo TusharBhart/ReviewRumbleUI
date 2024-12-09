@@ -24,7 +24,7 @@ export class SettingsDialogComponent {
 
   selectedTheme: string = this.themeService.currentTheme();
   selectedThemeColor: string = this.themeService.currentThemeColor();
-  userStatus = this.data.user.status;
+  userStatus = this.data.user.status.toLowerCase();
 
   onThemeChange(theme: string) {
     this.themeService.setTheme(theme);

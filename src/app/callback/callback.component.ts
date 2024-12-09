@@ -12,6 +12,6 @@ export class CallbackComponent implements OnInit {
   private readonly authService = inject(AuthService);
 
   ngOnInit(): void {
-    // this.authService.handleCallback();
+    this.authService.handleCallback();
   }
 }

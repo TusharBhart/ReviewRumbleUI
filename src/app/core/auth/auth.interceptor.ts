@@ -23,7 +23,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         router.navigate(['/']);
       }
 
-      return throwError(() => new Error(error.message));
+      return throwError(() => error);
     })
   );
 };

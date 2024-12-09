@@ -32,7 +32,7 @@ export class AuthService {
     if (code) {
       this.reviewRumbleApi.login(code).subscribe({
         next: (response) => {
-          localStorage.setItem('access_token', response); // TODO: Store token in a more secure way (MAYBE use a cookie)
+          localStorage.setItem('access_token', response.token); // TODO: Store token in a more secure way (MAYBE use a cookie)
           this.isAuthenticated.set(true);
 
           this.router.navigate(['/']);

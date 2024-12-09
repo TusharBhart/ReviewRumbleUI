@@ -10,8 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddPullRequestDialogComponent } from './add-pull-request-dialog/add-pull-request-dialog.component';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 export class HomeComponent {
   readonly dialog = inject(MatDialog);
   readonly route = inject(ActivatedRoute);
+  readonly router = inject(Router);
+  readonly snackBar = inject(MatSnackBar);
 
   user = this.route.snapshot.data['user'];
 
@@ -32,9 +35,15 @@ export class HomeComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('URL entered:', result);
+        this.snackBar.open('Pull request added successfully', 'Close', {
+          duration: 5000,
+        });
+
+        this.router.navigate(['home', 'my-pull-requests']);
       } else {
-        console.log('Dialog was canceled');
+        this.snackBar.open('Some Error Occured. Please try again later!', 'Close', {
+          duration: 5000,
+        });
       }
     });
   }
